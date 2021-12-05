@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Attribute</title>
+</head>
+<body>
+    <h2>주석 </h2>
+
+    <span th:text="${data}">html data</span>
+
+    <h2>1. 표준 HTML 주석</h2>
+    <!--
+    <span th:text="${data}">html data</span>
+    -->
+
+    <h2>2. 타임리프 파서 주석</h2>
+    <!--/* [[${data}]] */-->
+
+    <!--/*-->
+    <span th:text="${data}">html data</span>
+    <!--*/-->
+
+    <h2>3. 타임리프 프로타입 주석(Thymeleaf 렌더링시만 보임, 그냥 보면 주석처리 )</h2>
+    <!--/*/
+    <span th:text="${data}">html data</span>
+    /*/-->
+
+
+
+</body>
+</html>
