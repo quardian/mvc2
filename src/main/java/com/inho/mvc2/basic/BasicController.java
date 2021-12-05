@@ -205,13 +205,34 @@ public class BasicController {
     @GetMapping(value="/each")
     public String each(Model model)
     {
-        List<User> list = new ArrayList<>();
-        list.add( new User("userA", 10));
-        list.add( new User("userB", 20));
-        list.add( new User("userC", 30));
+        List<User> list = getUsers();
 
         model.addAttribute("users", list);
 
         return "basic/each";
+    }
+
+
+    /**
+     * if, unless
+     * @param model
+     * @return
+     */
+    @GetMapping(value="/condition")
+    public String condition(Model model)
+    {
+        List<User> list = getUsers();
+
+        model.addAttribute("users", list);
+
+        return "basic/condition";
+    }
+
+    private List<User> getUsers() {
+        List<User> list = new ArrayList<>();
+        list.add(new User("userA", 10));
+        list.add(new User("userB", 20));
+        list.add(new User("userC", 30));
+        return list;
     }
 }
