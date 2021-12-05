@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>text-basic</title>
+</head>
+<body>
+    <h2>컨톈츠에 데이터 출력하기</h2>
+    <ul>
+        <li>th:text 사용 <span th:text="${data}">안녕</span></li>
+        <li>th:utext 사용 <span th:utext="${data}">안녕</span></li>
+
+        <li>Expression inlining (th:text) <span th:inline="none">[[${data}]]</span>   = [[ ${data} ]] </li>
+        <li>Expression inlining (th:utext) <span th:inline="none">[(${data)]]</span>   = [( ${data} )] </li>
+    </ul>
+
+</body>
+</html>

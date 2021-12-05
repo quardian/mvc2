@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>타임리프 기본객체</title>
+</head>
+<body>
+    <h2>식 기본 객체(Expression Basic Objects)</h2>
+    <ul>
+        <li>request         = <span th:text="${ #request  }"></span> </li>
+        <li>response        = <span th:text="${ #response }"></span> </li>
+        <li>session         = <span th:text="${ #session }"></span> </li>
+        <li>servletContext  = <span th:text="${ #servletContext }"></span> </li>
+        <li>locale          = <span th:text="${ #locale }"></span> </li>
+    </ul>
+
+
+    <h2>편의 객체</h2>
+    <ul>
+        <li>Request Parameter   = <span th:text="${ param.paramData  }"></span> </li>
+        <li>==> #request.getParameter('paramData')   = <span th:text="${ #request.getParameter('paramData')  }"></span> </li>
+        <li>Session             = <span th:text="${ session.sessionData }"></span> </li>
+        <li>==> #session.getAttribute('sessionData')             = <span th:text="${ #session.getAttribute('sessionData') }"></span> </li>
+        <li>Spring Bean         = <span th:text="${ @helloBean.hello('Spring!') }"></span> </li>
+    </ul>
+
+
+
+    <h2>#ctx</h2>
+    <ul>
+        <li>#ctx.locale             = <span th:text="${ #ctx.locale  }"></span> </li>
+        <li>#ctx.variableNames      = <span th:text="${ #ctx.variableNames }"></span> </li>
+        <li>#ctx.request            = <span th:text="${ #ctx.request  }"></span> </li>
+        <li>#ctx.response           = <span th:text="${ #ctx.response  }"></span> </li>
+        <li>#ctx.session            = <span th:text="${ #ctx.session  }"></span> </li>
+        <li>#ctx.servletContext     = <span th:text="${ #ctx.servletContext  }"></span> </li>
+    </ul>
+
+    <h2>#request</h2>
+    <ul>
+        <li>#request.getContextPath() = <span th:text="${ #request.getContextPath() }"></span> </li>
+    </ul>
+
+
+    <h2>#session</h2>
+    <ul>
+        <li>#session.id = <span th:text="${ #session.id}"></span> </li>
+        <li>#session.lastAccessedTime = <span th:text="${ #session.lastAccessedTime}"></span> </li>
+    </ul>
+</body>
+</html>

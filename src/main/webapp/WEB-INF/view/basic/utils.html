@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SpringEL 표현식</title>
+</head>
+<body>
+    <h2>Thymeleaf utility Object</h2>
+
+    <div>
+        <p>#execInfo.templateName : Return the name and mode of the 'leaf' template.</p>
+        <p>#execInfo.processedTemplateName : Return the name and mode of the 'root' template.</p>
+    </div>
+
+    <ul> #execInfo
+        <li>${ #execInfo.templateName } = <span th:text="${ #execInfo.templateName }"></span></li>
+        <li>${ #execInfo.templateMode } = <span th:text="${ #execInfo.templateMode }"></span></li>
+        <li>${ #execInfo.processedTemplateName } = <span th:text="${ #execInfo.processedTemplateName }"></span></li>
+        <li>${ #execInfo.processedTemplateMode } = <span th:text="${ #execInfo.processedTemplateMode }"></span></li>
+        <li>${ #execInfo.templateNames } = <span th:text="${ #execInfo.templateNames }"></span></li>
+        <li>${ #execInfo.templateModes } = <span th:text="${ #execInfo.templateModes }"></span></li>
+    </ul>
+
+    <ul> #temporals
+        <li> default = <span th:text="${ localDatetime }"></span></li>
+        <li> yyyy-MM-dd HH:mm:ss = <span th:text="${ #temporals.format(localDatetime,'yyyy-MM-dd HH:mm:ss') }"></span></li>
+
+        <li>${ #temporals.year(localDatetime) } = <span th:text="${ #temporals.year(localDatetime) }"></span></li>
+        <li>${ #temporals.month(localDatetime) } = <span th:text="${ #temporals.month(localDatetime) }"></span></li>
+        <li>${ #temporals.day(localDatetime) } = <span th:text="${ #temporals.day(localDatetime) }"></span></li>
+        <li>${ #temporals.hour(localDatetime) } = <span th:text="${ #temporals.hour(localDatetime) }"></span></li>
+        <li>${ #temporals.minute(localDatetime) } = <span th:text="${ #temporals.minute(localDatetime) }"></span></li>
+        <li>${ #temporals.second(localDatetime) } = <span th:text="${ #temporals.second(localDatetime) }"></span></li>
+        <li>${ #temporals.nanosecond(localDatetime) } = <span th:text="${ #temporals.nanosecond(localDatetime) }"></span></li>
+
+        <li>${ #temporals.monthName(localDatetime) } = <span th:text="${ #temporals.monthName(localDatetime) }"></span></li>
+        <li>${ #temporals.monthNameShort(localDatetime) } = <span th:text="${ #temporals.monthNameShort(localDatetime) }"></span></li>
+
+        <li>${ #temporals.dayOfWeek(localDatetime) } = <span th:text="${ #temporals.dayOfWeek(localDatetime) }"></span></li>
+        <li>${ #temporals.dayOfWeekName(localDatetime) } = <span th:text="${ #temporals.dayOfWeekName(localDatetime) }"></span></li>
+        <li>${ #temporals.dayOfWeekNameShort(localDatetime) } = <span th:text="${ #temporals.dayOfWeekNameShort(localDatetime) }"></span></li>
+    </ul>
+
+
+
+    <ul> #dates
+        <li> default = <span th:text="${ date }"></span></li>
+
+        <li> #dates.format(date) = <span th:text="${ #dates.format(date, 'yyyy-MM-dd HH:mm:ss') }"></span></li>
+        <li> #dates.formatISO(date) = <span th:text="${ #dates.formatISO(date) }"></span></li>
+
+        <li> #dates.year(date) = <span th:text="${ #dates.year(date) }"></span></li>
+        <li> #dates.month(date) = <span th:text="${ #dates.month(date) }"></span></li>
+        <li> #dates.day(date) = <span th:text="${ #dates.day(date) }"></span></li>
+        <li> #dates.hour(date) = <span th:text="${ #dates.hour(date) }"></span></li>
+        <li> #dates.minute(date) = <span th:text="${ #dates.minute(date) }"></span></li>
+        <li> #dates.second(date) = <span th:text="${ #dates.second(date) }"></span></li>
+        <li> #dates.millisecond(date) = <span th:text="${ #dates.millisecond(date) }"></span></li>
+    </ul>
+
+
+    <ul> #numbers
+        <li> intVal1 = <span th:text="${ intVal1 }"></span></li>
+        <li> #numbers.formatInteger(intVal1,3) = <span th:text="${ #numbers.formatInteger(intVal1,3) }"></span></li>
+        <li> #numbers.formatInteger(intVal1,3,'COMMA')  = <span th:text="${ #numbers.formatInteger(intVal1,3, 'COMMA') }"></span></li>
+
+        <li> intVal2 = <span th:text="${ intVal2 }"></span></li>
+        <li> #numbers.formatInteger(intVal2,3) = <span th:text="${ #numbers.formatInteger(intVal2,3) }"></span></li>
+        <li> #numbers.formatInteger(intVal2,3,'COMMA')  = <span th:text="${ #numbers.formatInteger(intVal2,3, 'COMMA') }"></span></li>
+
+        <li> decimal1 = <span th:text="${ decimal1 }"></span></li>
+        <li> #numbers.formatDecimal(decimal1, 3, 2) = <span th:text="${ #numbers.formatDecimal(decimal1, 3, 2)  }"></span></li>
+        <li> #numbers.formatDecimal(decimal1, 3, 2, 'POINT') = <span th:text="${ #numbers.formatDecimal(decimal1, 3, 2, 'POINT')  }"></span></li>
+
+        <li> decimal2 = <span th:text="${ decimal2 }"></span></li>
+        <li> #numbers.formatDecimal(decimal2, 3, 2) = <span th:text="${ #numbers.formatDecimal(decimal2, 3, 2)  }"></span></li>
+        <li> #numbers.formatDecimal(decimal2, 3, 2, 'POINT') = <span th:text="${ #numbers.formatDecimal(decimal2, 3, 2, 'POINT')  }"></span></li>
+        <li> #numbers.formatDecimal(decimal2, 3, 2, 'COMMA') = <span th:text="${ #numbers.formatDecimal(decimal2, 3, 2, 'COMMA')  }"></span></li>
+
+        <li> #numbers.formatDecimal(decimal2, 3,'COMMA', 2, 'POINT') = <span th:text="${ #numbers.formatDecimal(decimal2, 3,'COMMA', 2, 'POINT')   }"></span></li>
+
+        <li> #numbers.formatDecimal(bigDecimalVal, 3,'COMMA', 2, 'POINT') = <span th:text="${ #numbers.formatDecimal(bigDecimalVal, 3,'COMMA', 2, 'POINT')   }"></span></li>
+
+        <li> percent = <span th:text="${ percent }"></span></li>
+        <li> #numbers.formatPercent(percent, 1, 2) = <span th:text="${ #numbers.formatPercent(percent, 1, 2) }"></span></li>
+
+        <li> "${ #numbers.sequence(1,10,2) }"></span>
+            <table>
+                <tr>
+                    <td th:each="no: ${#numbers.sequence(1,10,2)}"
+                        th:text="${no}">
+                    </td>
+                </tr>
+            </table>
+        </li>
+    </ul>
+
+
+    <ul> #strings
+        <li>#strings.toString(nullVal) - null safe = <span th:text="${ #strings.toString(nullVal) }"></span></li>
+        <li>#strings.toString(emptyVal) - null safe = <span th:text="${ #strings.toString(emptyVal) }"></span></li>
+
+        <li>#strings.isEmpty(nullVal) - null safe = <span th:text="${ #strings.isEmpty(nullVal) }"></span></li>
+        <li>#strings.isEmpty(emptyVal) - null safe = <span th:text="${ #strings.isEmpty(emptyVal) }"></span></li>
+        <li>#strings.isEmpty(stringVal) - null safe = <span th:text="${ #strings.isEmpty(stringVal) }"></span></li>
+
+
+        <li>#strings.defaultString(nullVal, 'default') =
+            <span th:text="${ #strings.defaultString(nullVal, 'default') }"></span></li>
+        <li>#strings.defaultString(emptyVal, 'default') =
+            <span th:text="${ #strings.defaultString(emptyVal, 'default') }"></span></li>
+        <li>#strings.defaultString(stringVal, 'default') =
+            <span th:text="${ #strings.defaultString(stringVal, 'default') }"></span></li>
+
+
+        <li>#strings.indexOf('0123456', '12') = <span th:text="${ #strings.indexOf('0123456', '12') }"></span></li>
+        <li>#strings.substring('0123456', 1,3) = <span th:text="${ #strings.substring('0123456', 1,3) }"></span></li>
+        <li>#strings.replace('0313233', '3', 'X') = <span th:text="${ #strings.replace('0313233', '3', 'X')  }"></span></li>
+
+        <li>#strings.prepend('0123456', 'prefix') = <span th:text="${ #strings.prepend('0123456', 'prefix') }"></span></li>
+        <li>#strings.append('0123456', 'suffix') = <span th:text="${ #strings.append('0123456', 'suffix') }"></span></li>
+
+
+        <li>#strings.arrayJoin(arr, ',') = <span th:text="${ #strings.arrayJoin(arr, ',')  }"></span></li>
+        <li>#strings.listJoin(list, ',') = <span th:text="${ #strings.listJoin(list, ',')  }"></span></li>
+        <li>#strings.trim(stringVal)     = <span th:text="${ #strings.trim(stringVal)  }"></span></li>
+        <li>#strings.length(stringVal)   = <span th:text="${ #strings.length(stringVal)  }"></span></li>
+        <li>#strings.length(#strings.trim(stringVal))   = <span th:text="${ #strings.length(#strings.trim(stringVal))  }"></span></li>
+
+
+        <li>#strings.escapeXml('<xml>') =
+            <span th:text="${ #strings.escapeXml('<xml>')  }"></span> </li>
+
+        <li>#strings.escapeJavaScript(javaScript) =
+            <span th:text="${ #strings.escapeJavaScript(javaScript) }"></span></li>
+
+
+        <li>#strings.concat('A','B') = <span th:text="${ #strings.concat('A','B') }"></span></li>
+        <li>#strings.equals('A','a') = <span th:text="${ #strings.equals('A','a') }"></span></li>
+        <li>#strings.equalsIgnoreCase('A','a') = <span th:text="${ #strings.equalsIgnoreCase('A','a') }"></span></li>
+    </ul>
+
+    <ul> #ids
+        <li>#ids.seq('id') = <span th:text="${ #ids.seq('id') }"></span></li>
+        <li>#ids.seq('id') = <span th:text="${ #ids.seq('id') }"></span></li>
+        <li>#ids.prev('id') = <span th:text="${ #ids.prev('id') }"></span></li>
+        <li>#ids.next('id') = <span th:text="${ #ids.next('id') }"></span></li>
+    </ul>
+</body>
+</html>
