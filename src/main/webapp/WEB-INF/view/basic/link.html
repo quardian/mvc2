@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>basic</title>
+</head>
+<body>
+    <h2>링크</h2>
+    <ul>
+        <li> <a th:href="@{/basic/link }">basic url</a> </li>
+        <li> <a th:href="@{/basic/link(param1=${param1}, param2=${param2})}">query param</a> </li>
+        <li> <a th:href="@{/basic/link/{param1}/{param2}(param1=${param1}, param2=${param2})}">path variable</a> </li>
+        <li> <a th:href="@{/basic/link/{param1}/(param1=${param1}, param2=${param2})}">path + query variable</a> </li>
+    </ul>
+
+</body>
+</html>
