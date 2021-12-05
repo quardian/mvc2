@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Attribute</title>
+</head>
+<body>
+    <h2>th:block - HTML 태그가 아닌 타임리프의 유일한 자체 태크</h2>
+
+            <th:block
+                    th:each="user, userStat : ${users}">
+            <div>
+                <span th:text="${user.username}"></span>
+                <span th:text="${user.age}"></span>
+            </div>
+            <div>
+                <span th:text="${userStat.count}"></span> 번째 : [[${user.username}]]
+            </div>
+            </th:block>
+
+
+</body>
+</html>

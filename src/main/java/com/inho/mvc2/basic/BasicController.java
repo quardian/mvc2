@@ -236,7 +236,14 @@ public class BasicController {
         return "basic/comments";
     }
 
+    @GetMapping(value="/block")
+    public String block(Model model)
+    {
+        List<User> list = getUsers();
+        model.addAttribute("users", list);
 
+        return "basic/block";
+    }
 
     private List<User> getUsers() {
         List<User> list = new ArrayList<>();
