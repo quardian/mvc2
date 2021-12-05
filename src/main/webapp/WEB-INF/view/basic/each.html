@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Attribute</title>
+</head>
+<body>
+    <h2>each 반복문 기본</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>이름</th>
+                <th>나이</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:if="${users != null && users.size() > 0}">
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.age}"></td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+
+
+    <h2>each 반복문 상태</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>나이</th>
+            <th>상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:if="${ #lists.isEmpty(users) }">
+            <tr>
+                <td colspan="4">데이터가 없습니다.</td>
+            </tr>
+        </th:block>
+        <th:block th:if="${users != null && users.size() > 0}">
+            <tr th:each="user, userStat : ${users}">
+                <td th:text="${userStat.count}"></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.age}"></td>
+                <td th:text="|
+                    index=${userStat.index},
+                    count=${userStat.count},
+                    size=${userStat.size},
+                    even=${userStat.even},
+                    odd=${userStat.odd},
+                    first=${userStat.first},
+                    last=${userStat.last},
+                    current=${userStat.current}
+                |"></td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+
+
+</body>
+</html>

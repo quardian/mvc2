@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Attribute</title>
+</head>
+<body>
+    <h2>속성 설정</h2>
+    <form th:object="${user}">
+        <p>주의 th:field는 id,name 속성이 없으면, 자동으로 생성하며,
+            id,name 필드가 있는 경우, name 필드만 덮어씌운다.
+        </p>
+        <input th:field="*{username}"   id="userName"   name="userName" />
+        <input th:field="*{age}"  />
+        <input type="text" name="mock"  id="mock"       th:name="userA" th:id="userA" />
+
+
+        <ul>
+            속성 추가
+            <li>- th:attrappend = <input type="text" class="text" th:attrappend="class=' large'" /> </li>
+            <li>- th:attrprepend = <input type="text" class="text" th:attrprepend="class='large '" /> </li>
+            <li>- th:classappend = <input type="text" class="text" th:classappend="large" /> </li>
+        </ul>
+
+
+        <ul>
+            checked 처리
+            <li>- checked O     = <input type="checkbox" name="active" th:checked="true" /> </li>
+            <li>- checked X     = <input type="checkbox" name="active" th:checked="false" /> </li>
+            <li>- checked=false = <input type="checkbox" name="active" checked="false" /> </li>
+        </ul>
+    </form>
+
+
+
+</body>
+</html>

@@ -195,6 +195,23 @@ public class BasicController {
     @GetMapping(value="/attribute")
     public String attribute(Model model)
     {
+        User user = new User("이인호", 18);
+        model.addAttribute("user", user);
+
         return "basic/attribute";
+    }
+
+
+    @GetMapping(value="/each")
+    public String each(Model model)
+    {
+        List<User> list = new ArrayList<>();
+        list.add( new User("userA", 10));
+        list.add( new User("userB", 20));
+        list.add( new User("userC", 30));
+
+        model.addAttribute("users", list);
+
+        return "basic/each";
     }
 }
