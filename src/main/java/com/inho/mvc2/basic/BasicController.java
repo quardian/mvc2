@@ -170,4 +170,12 @@ public class BasicController {
         return "basic/link";
     }
 
+
+    @GetMapping(value="/literal")
+    public String literal(Model model)
+    {
+        model.addAttribute("data", "world!!");
+
+        return "basic/literal";
+    }
 }

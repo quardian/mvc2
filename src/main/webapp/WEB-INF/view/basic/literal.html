@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SpringEL 표현식</title>
+</head>
+<body>
+    <h2>Literal</h2>
+    <ul>
+        Literal 종류
+        <li>문자 : 'hello' (작은 따옴표로 감싸야 한다)</li>
+        <li>숫자 : 10</li>
+        <li>불린 : true, false</li>
+        <li>null : null</li>
+    </ul>
+
+    <ul> Literal - String
+        <li>th:text="hello" = <span th:text="hello"></span></li>
+        <li>th:text="'hello' + ' world!'" = <span th:text="'hello' + ' world!'"></span></li>
+        <li>th:text="'hello ' + ${data}" = <span th:text="'hello ' + ${data}"></span></li>
+        <li>th:text="|리터럴 대체 + ${data}|" = <span th:text="|리터럴 대체 + ${data}|"></span></li>
+        <li>th:text="'escape sq\''" = <span th:text="'escape  sq\''"></span></li>
+    </ul>
+
+</body>
+</html>
