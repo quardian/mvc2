@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Operation </title>
+</head>
+<body>
+    <h2>Operation</h2>
+    <ul>
+        산술 연산
+        <li> 10 + 2 = <span th:text="10 + 2">12</span> </li>
+        <li> 10 - 5 = <span th:text="10 - 5">5</span> </li>
+        <li> 10 * 5 = <span th:text="10 * 5">50</span> </li>
+        <li> 10 / 2 = <span th:text="10 / 2">5</span> </li>
+        <li> 10 % 3 = <span th:text="10 % 3">1</span> </li>
+    </ul>
+
+    <ul>
+         연산
+        <li> 1 > 10  = <span th:text="1 > 10">false</span> </li>
+        <li> 1 gt 10 = <span th:text="1 gt 10">false</span> </li>
+        <li> 1 >= 10 = <span th:text="1 >= 10">false</span> </li>
+        <li> 1 ge 10 = <span th:text="1 ge 10 ">false</span> </li>
+        <li> 1 == 1 = <span th:text="1 == 1">true</span> </li>
+        <li> 1 != 1 = <span th:text="1 != 1">false</span> </li>
+    </ul>
+
+    <ul>
+        조건식
+        <li> (10 % 2 == 0 ) ? '짝수' : '홀수'  =
+            <span th:text="(10 % 2 == 0 ) ? '짝수' : '홀수'">짝수</span> </li>
+    </ul>
+
+    <ul>
+        Elvis 연산자
+        <li> ${data}?: '데이터가 없습니다' =
+            <span th:text="${data}?: '데이터가 없습니다'"></span> </li>
+        <li> ${nullData}?: '데이터가 없습니다' =
+            <span th:text="${nullData}?: '데이터가 없습니다'"></span> </li>
+        <li> ${emptyData}?: '데이터가 없습니다' =
+            <span th:text="${emptyData}?: '데이터가 없습니다'"></span> </li>
+    </ul>
+
+
+    <ul>
+        No - Oration
+        <li> ${data}?: _ = <span th:text="${data}?: _">데이터가 없습니다.</span> </li>
+        <li> ${nullData}?: _ = <span th:text="${nullData}?: _">데이터가 없습니다.</span> </li>
+        <li> ${emptyData}?: _ = <span th:text="${emptyData}?: _">데이터가 없습니다.</span> </li>
+    </ul>
+</body>
+</html>

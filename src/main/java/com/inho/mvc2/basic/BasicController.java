@@ -178,4 +178,23 @@ public class BasicController {
 
         return "basic/literal";
     }
+
+
+    @GetMapping(value="/operation")
+    public String operation(Model model)
+    {
+        model.addAttribute("nullData", null);
+        model.addAttribute("emptyData", "");
+        model.addAttribute("data", "world!!");
+
+        return "basic/operation";
+    }
+
+
+
+    @GetMapping(value="/attribute")
+    public String attribute(Model model)
+    {
+        return "basic/attribute";
+    }
 }
