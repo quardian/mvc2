@@ -1,0 +1,17 @@
+<!DOCTYPE html >
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    th:fragment="layout(title,content)">
+<head>
+    <title th:replace="${title}">메인 페이지 타이틀</title>
+</head>
+<body>
+    <h1>레이아웃 H1</h1>
+    <div th:replace="${content}">
+        <p>레이아웃 컨텐츠</p>
+    </div>
+
+    <footer>
+        레이아웃 푸터
+    </footer>
+</body>
+</html>

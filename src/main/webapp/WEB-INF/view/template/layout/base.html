@@ -1,0 +1,17 @@
+<!DOCTYPE html >
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="common_header(title, links)">
+    <meta charset="UTF-8">
+    <title th:replace="${title}">Title</title>
+
+    <!-- 공통-->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/awesomeapp.css}">
+    <link rl="shortcut icon" th:href="@{/images/favicon.ico}">
+    <script type="text/javascript" th:src="@{/sh/scripts/codebase.js}"></script>
+
+    <!-- 추가 -->
+    <th:block th:replace="${links}" />
+</head>
+
+</html>
