@@ -48,5 +48,16 @@
         <li> ${nullData}?: _ = <span th:text="${nullData}?: _">데이터가 없습니다.</span> </li>
         <li> ${emptyData}?: _ = <span th:text="${emptyData}?: _">데이터가 없습니다.</span> </li>
     </ul>
+
+
+    <ul>
+        Safe Navigation 연산자 (SpringEL 문법제공) ==> data가 null이 아니면 toString(), null 이면 바로 null반환
+        <li> ${data?.toString()}=
+            <span th:text="${data?.toString()}"></span>
+        </li>
+        <li> ${nullData?.toString()}=
+            <span th:text="${nullData?.toString()}"></span>
+        </li>
+    </ul>
 </body>
 </html>
