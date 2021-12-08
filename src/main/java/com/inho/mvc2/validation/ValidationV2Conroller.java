@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -163,7 +164,7 @@ public class ValidationV2Conroller
      * @param redirectAttributes
      * @return
      */
-    @PostMapping("/add")
+    //@PostMapping("/add")
     public String addItemV2(Model model,
                           @ModelAttribute Item item,
                           BindingResult bindingResult,
@@ -204,6 +205,121 @@ public class ValidationV2Conroller
         return "redirect:/validation/v2/items/{itemId}";
     }
 
+
+    /**
+     * 에러 messageSource 사용
+     * @param model
+     * @param item
+     * @param bindingResult
+     * @param redirectAttributes
+     * @return
+     */
+    //@PostMapping("/add")
+    public String addItemV3(Model model,
+                            @ModelAttribute Item item,
+                            BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes) {
+        log.info("item.open={}", item.getOpen());
+        log.info("item.regions={}", item.getRegions());
+        log.info("item.itemType={}", item.getItemType());
+
+        // 특정필드 검증 로직
+        if ( StringUtils.isEmpty(item.getItemName()) ){
+            bindingResult.addError( new FieldError("item", "itemName", item.getItemName(), false,
+                    new String[]{"requird.item.itemName"}, null,
+                    "상품 이름은 필수입니다."));
+        }
+        if ( item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000 ){
+            bindingResult.addError( new FieldError("item", "price", item.getPrice(), false,
+                    new String[]{"range.item.price"}, new String[]{"1,000", "1,000,000"},
+                    "가격은 1,000 ~ 1,000,000 까지 허용합니다."));
+        }
+        if ( item.getQuantity() == null || item.getQuantity() >= 9999){
+            bindingResult.addError( new FieldError("item", "quantity", item.getQuantity(), false,
+                    new String[]{"max.item.quantity"}, null,
+                    "수량은 최대 9,999 까지 허용합니다."));
+        }
+
+        // 복합룰 검증
+        if ( item.getPrice() != null && item.getQuantity() != null ){
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if ( resultPrice < 10000 ){
+                bindingResult.addError( new ObjectError("item",
+                        new String[]{"totalPriceMin"}, null,
+                        "가격 * 수량의 합은 10,000원 이상이어야 합니다. 현재 값 = " + resultPrice));
+            }
+        }
+
+        // 검증 실패시 다시 입력 폼으로
+        if ( bindingResult.hasErrors() ){
+            model.addAttribute("bindingResult", bindingResult);
+            return "validation/v2/addForm";
+        }
+
+        // 이하 성공로직
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+
+
+    /**
+     * 에러코드 단순화 ( MessageCodeResolver 이해하기 )
+     *  errCode를 어떻게 조합해서 만들어내는지?
+     * @param model
+     * @param item
+     * @param bindingResult
+     * @param redirectAttributes
+     * @return
+     */
+    @PostMapping("/add")
+    public String addItemV4(Model model,
+                            @ModelAttribute Item item,
+                            BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes) {
+
+        log.info("bindingResult.getObjectName={}", bindingResult.getObjectName());
+        log.info("bindingResult.getTarget={}", bindingResult.getTarget());
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult,
+                "itemName", "required");
+
+        // 특정필드 검증 로직
+        if ( StringUtils.isEmpty(item.getItemName()) ){
+            // 규칙 = "requried" + ".' + objectName + "." + field
+            // means = new String[] {"required.item.itemName", "required"}
+            // 코드 수정없이, 메시지만 수정해서 좀더 상세한 메시지에 접근 가능하다.
+            bindingResult.rejectValue("itemName", "required");
+
+        }
+        if ( item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000 ){
+            bindingResult.rejectValue("price", "range", new Object[]{"1,000", "1,000,000"}, null);
+        }
+        if ( item.getQuantity() == null || item.getQuantity() >= 9999){
+            bindingResult.rejectValue("quantity", "max");
+        }
+
+        // 복합룰 검증
+        if ( item.getPrice() != null && item.getQuantity() != null ){
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if ( resultPrice < 10000 ){
+                bindingResult.reject("totalPriceMin", new Object[]{resultPrice}, null);
+            }
+        }
+
+        // 검증 실패시 다시 입력 폼으로
+        if ( bindingResult.hasErrors() ){
+            model.addAttribute("bindingResult", bindingResult);
+            return "validation/v2/addForm";
+        }
+
+        // 이하 성공로직
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
 
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model) {
