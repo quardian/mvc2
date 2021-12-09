@@ -1,23 +1,17 @@
 package com.inho.mvc2.validation;
 
 import com.inho.mvc2.Repository.ItemRepository;
-import com.inho.mvc2.domain.DeliveryCode;
-import com.inho.mvc2.domain.Item;
-import com.inho.mvc2.domain.ItemType;
+import com.inho.mvc2.domain.*;
+import com.inho.mvc2.domain.crud.C;
+import com.inho.mvc2.domain.crud.U;
 import com.inho.mvc2.domain.validator.ItemObjectValidator;
-import com.inho.mvc2.domain.validator.ItemValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -120,10 +114,11 @@ public class ValidationV3Conroller
      */
     @PostMapping("/add")
     public String addItemV(Model model,
-                            @Validated @ModelAttribute Item item,
+                            @Validated(C.class) @ModelAttribute Item item,
                             BindingResult bindingResult,
                             RedirectAttributes redirectAttributes) {
 
+        // 오브젝트 Validation 체크
         itemObjectValidator.validate(item, bindingResult);
 
         // 검증 실패시 다시 입력 폼으로
@@ -149,7 +144,21 @@ public class ValidationV3Conroller
     }
 
     @PostMapping("/{itemId}/edit")
-    public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
+    public String edit(Model model,
+                       @PathVariable Long itemId,
+                       @Validated(U.class) @ModelAttribute Item item,
+                       BindingResult bindingResult) {
+
+        // 오브젝트 Validation 체크
+        itemObjectValidator.validate(item, bindingResult);
+
+        // 검증 실패시 다시 입력 폼으로
+        if ( bindingResult.hasErrors() ){
+            model.addAttribute("bindingResult", bindingResult);
+            return "validation/v3/editForm";
+        }
+
+
         itemRepository.update(itemId, item);
         return "redirect:/validation/v3/items/{itemId}";
     }

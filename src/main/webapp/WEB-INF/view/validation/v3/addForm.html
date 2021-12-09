@@ -43,7 +43,8 @@
                 th:errorclass="field-error" : 에러가 있으면 class 추가해줌
                 th:errors="#{itemName}"     : 에러가 잇는 경우에 출력됨
             -->
-            <input type="text" id="itemName"    th:field="*{itemName}" class="form-control" placeholder="이름을 입력하세요"
+            <input type="text" id="itemName"    th:field="*{itemName}"
+                   class="form-control" placeholder="이름을 입력하세요"
                    th:placeholder="#{label.required.input(#{label.item.itemName})}"
                    th:errorclass="field-error">
 
