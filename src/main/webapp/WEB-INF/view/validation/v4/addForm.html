@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2 th:text="#{page.addItem}"></h2>
+    </div>
+
+    <form action="item.html" th:action th:object="${item}" method="post">
+        <!--
+             #fields : BindingResult가 제공하는 검증 오류에 접근
+
+             th:if="${#fields.hasGlobalErrors()}"
+             th:each="err : ${#fields.globalErrors()}"
+             th:text="${err}"
+        -->
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error"
+                th:each="err : ${#fields.globalErrors()}"
+                th:text="${err}">Global Error</p>
+        </div>
+
+        <div>
+            <label for="itemName" th:text="#{label.item.itemName}">상품명</label>
+
+            <!--
+                th:errorclass="field-error" : 에러가 있으면 class 추가해줌
+                th:errors="#{itemName}"     : 에러가 잇는 경우에 출력됨
+            -->
+            <input type="text" id="itemName"    th:field="*{itemName}"
+                   class="form-control" placeholder="이름을 입력하세요"
+                   th:placeholder="#{label.required.input(#{label.item.itemName})}"
+                   th:errorclass="field-error">
+
+            <p class="field-error" th:errors="*{itemName}">
+                상품명 오류
+            </p>
+        </div>
+        <div>
+            <label for="price" th:text="#{label.item.price}">가격</label>
+            <input type="text" id="price"       th:field="*{price}" class="form-control" placeholder="가격을 입력하세요"
+                   th:placeholder="#{label.required.input(#{label.item.price})}"
+                   th:errorclass="field-error">
+            <p class="field-error" th:errors="*{price}">
+                가격 오류
+            </p>
+        </div>
+        <div>
+            <label for="quantity" th:text="#{label.item.quantity}">수량</label>
+            <input type="text" id="quantity"    th:field="*{quantity}" class="form-control" placeholder="수량을 입력하세요"
+                   th:placeholder="#{label.required.input(#{label.item.quantity})}"
+                   th:errorclass="field-error">
+            <p class="field-error" th:errors="*{quantity}">
+                수량 오류
+            </p>
+        </div>
+
+        <hr class="my-4">
+
+        <!--/*-->
+        1. 기본적인 FORM 데이터 전송
+        1) 단일 체크박스 선택시     : open=on
+        2) 단일 체크박스 미선택시   : POST 데이터에 아무것도 안넘어옴. ( 따라서 서버에서는 당연히 null 이 된다 )
+
+        --> 따라서 해당 폼항목이 없는 것인지, 선택을 안한것인지 불분명한 상황이 발생한다.
+        <input type="hidden" name="_open" value="on">
+        이런 부분을 해결하기 위해, Spring MVC 에서 히든 필드를 이용해서 처리한다.
+        2. 스프링 MVC 체크박스 처리
+        * 체크 박스를 체크 시, 스프링 MVC가 open에 값이 있는 것을 확인하고 사용한다. 이때 _open 은 무시한다.
+        * 체크 박스 미체크 시, 스프링 MVC가 _open만 있는 것을 확인하고, open 의 값이 체크되지 않았다고 인식한다.
+        이 경우 서버에서 Boolean 타입을 찍어보면 null이 아니라 false인 것을 확인할 수 있다.
+
+        3. 스프링부트에서 th:field를 사용시, 체크박스의 경우, hidden 필드를 자동으로 만들어 준다.
+        * th:field 값이 true 이면 checked 속성도 추가도니다.
+        <!--*/-->
+        <!-- single checkbox -->
+        <div>판매 여부</div>
+        <div>
+            <div class="form-check">
+                <input type="checkbox" id="open" th:field="*{open}" class="form-check-input">
+                <label for="open" class="form-check-label">판매 오픈</label>
+            </div>
+        </div>
+
+        <!-- multi checkbox -->
+        <div>
+            <div>등록 지역</div>
+            <div th:each="region : ${regions}" class="form-check form-check-inline">
+                <input type="checkbox" th:field="*{regions}" th:value="${region.key}" class="form-check-input">
+                <label th:for="${#ids.prev('regions')}"
+                       th:text="${region.value}" class="form-check-label">서울</label>
+            </div>
+        </div>
+
+        <!-- radio button -->
+        <div>
+            <div>상품 종류</div>
+            <div class="form-check form-check-inline"
+                 th:each="type : ${itemTypes}" >
+                <input type="radio"
+                       th:field="*{itemType}"
+                       th:value="${type.name()}" class="form-check-input">
+                <label th:for="${#ids.prev('itemType')}"
+                       th:text="${type.description}" class="form-check-label">
+                    BOOK
+                </label>
+            </div>
+        </div>
+
+        <!-- SELECT -->
+        <div>
+            <div>배송 방식</div>
+            <select th:field="*{deliveryCode}" class="form-select">
+                <option value="">==배송 방식 선택==</option>
+                <option th:each="deliveryCode : ${deliveryCodes}"
+                        th:value="${deliveryCode.code}"
+                        th:text="${deliveryCode.displayName}">FAST</option>
+            </select>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.save}">상품 등록</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        onclick="location.href='items.html'"
+                        th:onclick="|location.href='@{items}'|"
+                        type="button" th:text="#{button.cancen}">취소</button>
+            </div>
+        </div>
+
+    </form>
+
+</div> <!-- /container -->
+</body>
+</html>
