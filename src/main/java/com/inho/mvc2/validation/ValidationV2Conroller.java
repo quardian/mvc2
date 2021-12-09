@@ -4,6 +4,7 @@ import com.inho.mvc2.Repository.ItemRepository;
 import com.inho.mvc2.domain.DeliveryCode;
 import com.inho.mvc2.domain.Item;
 import com.inho.mvc2.domain.ItemType;
+import com.inho.mvc2.domain.validator.ItemValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
@@ -13,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -32,6 +35,7 @@ public class ValidationV2Conroller
 {
     private final ItemRepository itemRepository;
     private final LocaleResolver localeResolver;
+    private final ItemValidator itemValidator;
 
     /**
      * @ModelAttribute의 특별한 사용법
@@ -273,7 +277,7 @@ public class ValidationV2Conroller
      * @param redirectAttributes
      * @return
      */
-    @PostMapping("/add")
+    //@PostMapping("/add")
     public String addItemV4(Model model,
                             @ModelAttribute Item item,
                             BindingResult bindingResult,
@@ -320,6 +324,90 @@ public class ValidationV2Conroller
         redirectAttributes.addAttribute("status", true);
         return "redirect:/validation/v2/items/{itemId}";
     }
+
+
+    /**
+     * 별도 Validator 분리하여 검증 수행
+     * @param model
+     * @param item
+     * @param bindingResult
+     * @param redirectAttributes
+     * @return
+     */
+    //@PostMapping("/add")
+    public String addItemV5(Model model,
+                            @ModelAttribute Item item,
+                            BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes) {
+
+        if ( itemValidator.supports(item.getClass()) ){
+            itemValidator.validate(item, bindingResult);
+        }
+
+        // 검증 실패시 다시 입력 폼으로
+        if ( bindingResult.hasErrors() ){
+            model.addAttribute("bindingResult", bindingResult);
+            return "validation/v2/addForm";
+        }
+
+        // 이하 성공로직
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+
+    /**
+     * 컨트롤러 레벨에서 적용된다.
+     * @param dataBinder
+     */
+    @InitBinder
+    public void init(WebDataBinder dataBinder)
+    {
+        // 컨트롤러 요청 시 마다, WebDataBinder를 새로 생성한다.
+        // WebDataBinder에 검증기를 추가하면 해당 컨트롤러에서는 검증기를 자동 적용할 수 있다.
+        //@InitBinder -> 해당 컨트롤러에만 영향을 주며, 글로벌 설정은 별도로 해야한다.
+        dataBinder.addValidators(itemValidator);
+    }
+    /*  Validator 전역 설정 설정방법 : 이렇게 사용하는 경우는 드믈다.
+    *   public class AppMvcConfigure implements WebMvcConfigurer
+    *   {
+    *       @Override
+    *       public Validator getValidator(){
+    *           return new ItemValidator()
+    *       }
+    *   }
+    * */
+
+    /**
+     * @Validated 애노테이션을 적용하면, validator를 자동 실행해준다.
+     * @javax.validation.@Valid 를 사용하려면 의존관계 추가 필요 : 'org.springframework.boot:spring-boot-starter-validation'
+     * @Validated는 스프링 전용 검증 애노테이션이고, @Valid는 자바 표준 검증 애노테이션이다. ( 둘 다 스프링이 지원 )
+     * @param model
+     * @param item
+     * @param bindingResult
+     * @param redirectAttributes
+     * @return
+     */
+    @PostMapping("/add")
+    public String addItemV6(Model model,
+                            @Validated @ModelAttribute Item item,
+                            BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes) {
+
+        // 검증 실패시 다시 입력 폼으로
+        if ( bindingResult.hasErrors() ){
+            model.addAttribute("bindingResult", bindingResult);
+            return "validation/v2/addForm";
+        }
+
+        // 이하 성공로직
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+
 
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model) {
