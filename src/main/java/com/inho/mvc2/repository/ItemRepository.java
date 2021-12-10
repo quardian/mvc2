@@ -1,4 +1,4 @@
-package com.inho.mvc2.Repository;
+package com.inho.mvc2.repository;
 
 
 import com.inho.mvc2.domain.Item;

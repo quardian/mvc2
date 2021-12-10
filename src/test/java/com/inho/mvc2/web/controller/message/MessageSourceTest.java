@@ -1,4 +1,4 @@
-package com.inho.mvc2.message;
+package com.inho.mvc2.web.controller.message;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

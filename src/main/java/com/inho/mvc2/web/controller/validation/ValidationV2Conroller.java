@@ -1,6 +1,6 @@
-package com.inho.mvc2.validation;
+package com.inho.mvc2.web.controller.validation;
 
-import com.inho.mvc2.Repository.ItemRepository;
+import com.inho.mvc2.repository.ItemRepository;
 import com.inho.mvc2.domain.DeliveryCode;
 import com.inho.mvc2.domain.Item;
 import com.inho.mvc2.domain.ItemType;

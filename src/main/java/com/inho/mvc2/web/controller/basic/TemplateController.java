@@ -1,4 +1,4 @@
-package com.inho.mvc2.basic;
+package com.inho.mvc2.web.controller.basic;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

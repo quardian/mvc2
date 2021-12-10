@@ -1,4 +1,4 @@
-package com.inho.mvc2.domain.form;
+package com.inho.mvc2.web.form;
 
 import com.inho.mvc2.domain.Item;
 import com.inho.mvc2.domain.ItemType;
@@ -11,7 +11,10 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
-public class ItemSaveForm {
+public class ItemUpdateForm {
+
+    @NotNull
+    private Long id;
 
     @NotBlank //빈값+공백만 허용안함
     private String itemName;
@@ -21,6 +24,7 @@ public class ItemSaveForm {
     private Integer price;
 
     @NotNull
+    @Max(9999)
     private Integer quantity;
 
     private Boolean open;           //판매 여부
@@ -29,11 +33,12 @@ public class ItemSaveForm {
     private String deliveryCode;    //배송 방식
 
 
-    public ItemSaveForm() {
+    public ItemUpdateForm() {
     }
 
-    public ItemSaveForm(Item item)
+    public ItemUpdateForm(Item item)
     {
+        id          = item.getId();
         itemName    = item.getItemName();
         price       = item.getPrice();
         quantity    = item.getQuantity();
@@ -41,5 +46,19 @@ public class ItemSaveForm {
         regions     = item.getRegions();
         itemType    = item.getItemType();
         deliveryCode= item.getDeliveryCode();
+    }
+
+    public Item asItem()
+    {
+        Item item = new Item();
+        item.setId(id);
+        item.setItemName(itemName);
+        item.setPrice(price);
+        item.setQuantity(quantity);
+        item.setOpen(open);
+        item.setRegions(regions);
+        item.setItemType(itemType);
+        item.setDeliveryCode(deliveryCode);
+        return item;
     }
 }

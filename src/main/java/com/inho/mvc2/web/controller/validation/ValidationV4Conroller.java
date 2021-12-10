@@ -1,14 +1,20 @@
-package com.inho.mvc2.message;
+package com.inho.mvc2.web.controller.validation;
 
-import com.inho.mvc2.Repository.ItemRepository;
+import com.inho.mvc2.repository.ItemRepository;
 import com.inho.mvc2.domain.DeliveryCode;
 import com.inho.mvc2.domain.Item;
 import com.inho.mvc2.domain.ItemType;
+import com.inho.mvc2.web.form.ItemSaveForm;
+import com.inho.mvc2.web.form.ItemUpdateForm;
+import com.inho.mvc2.domain.validator.ItemSaveObjectValidator;
+import com.inho.mvc2.domain.validator.ItemUpdateObjectValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,11 +29,13 @@ import java.util.*;
 @RequiredArgsConstructor
 
 
-@RequestMapping(value="/message/items")
-public class MessageConroller
+@RequestMapping(value="/validation/v4/items")
+public class ValidationV4Conroller
 {
     private final ItemRepository itemRepository;
     private final LocaleResolver localeResolver;
+    private final ItemSaveObjectValidator itemSaveObjectValidator;
+    private final ItemUpdateObjectValidator itemUpdateObjectValidator;
 
     /**
      * @ModelAttribute의 특별한 사용법
@@ -80,14 +88,14 @@ public class MessageConroller
 
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
-        return "message/items/items";
+        return "validation/v4/items";
     }
 
     @GetMapping("/{itemId}")
     public String item(@PathVariable long itemId, Model model) {
         Item item = itemRepository.findById(itemId);
         model.addAttribute("item", item);
-        return "message/items/item";
+        return "validation/v4/item";
     }
 
     @GetMapping("/add")
@@ -96,35 +104,69 @@ public class MessageConroller
         if ( locale == null ) locale = Locale.getDefault();
         localeResolver.setLocale(request, response, locale);
 
-        model.addAttribute("item", new Item());
-        return "message/items/addForm";
+        model.addAttribute("item", new ItemSaveForm());
+        return "validation/v4/addForm";
     }
 
+    /**
+     * Field 에러는 Spring BeanValidator를 이용하고,
+     * Object 에러는 별도의 Validator로 구현
+     * @param model
+     * @param form
+     * @param bindingResult
+     * @param redirectAttributes
+     * @return
+     */
     @PostMapping("/add")
-    public String addItem(@ModelAttribute Item item,
-                          RedirectAttributes redirectAttributes) {
-        log.info("item.open={}", item.getOpen());
-        log.info("item.regions={}", item.getRegions());
-        log.info("item.itemType={}", item.getItemType());
+    public String addItemV(Model model,
+                            @Validated @ModelAttribute("item") ItemSaveForm form,
+                            BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes) {
 
+        // 오브젝트 Validation 체크
+        itemSaveObjectValidator.validate(form, bindingResult);
+
+        // 검증 실패시 다시 입력 폼으로
+        if ( bindingResult.hasErrors() ){
+            model.addAttribute("bindingResult", bindingResult);
+            return "validation/v4/addForm";
+        }
+
+        // 이하 성공로직
+        Item item = form.asItem();
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/message/items/{itemId}";
+        return "redirect:/validation/v4/items/{itemId}";
     }
+
 
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model) {
         Item item = itemRepository.findById(itemId);
-        model.addAttribute("item", item);
+        model.addAttribute("item", new ItemUpdateForm(item) );
 
-        return "message/items/editForm";
+        return "validation/v4/editForm";
     }
 
     @PostMapping("/{itemId}/edit")
-    public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
+    public String edit(Model model,
+                       @PathVariable Long itemId,
+                       @Validated @ModelAttribute("item") ItemUpdateForm form,
+                       BindingResult bindingResult) {
+
+        // 오브젝트 Validation 체크
+        itemUpdateObjectValidator.validate(form, bindingResult);
+
+        // 검증 실패시 다시 입력 폼으로
+        if ( bindingResult.hasErrors() ){
+            model.addAttribute("bindingResult", bindingResult);
+            return "validation/v4/editForm";
+        }
+
+        Item item = form.asItem();
         itemRepository.update(itemId, item);
-        return "redirect:/message/items/{itemId}";
+        return "redirect:/validation/v4/items/{itemId}";
     }
 
 

@@ -1,4 +1,4 @@
-package com.inho.mvc2.basic;
+package com.inho.mvc2.web.controller.basic;
 
 import com.inho.mvc2.domain.User;
 import lombok.extern.slf4j.Slf4j;

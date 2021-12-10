@@ -1,6 +1,6 @@
-package com.inho.mvc2.thymeleafwithspring;
+package com.inho.mvc2.web.controller.message;
 
-import com.inho.mvc2.Repository.ItemRepository;
+import com.inho.mvc2.repository.ItemRepository;
 import com.inho.mvc2.domain.DeliveryCode;
 import com.inho.mvc2.domain.Item;
 import com.inho.mvc2.domain.ItemType;
@@ -10,24 +10,24 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 
 
-@RequestMapping(value="/thymeleafwithsring/items")
-public class FormItemConroller
+@RequestMapping(value="/message/items")
+public class MessageConroller
 {
     private final ItemRepository itemRepository;
-
+    private final LocaleResolver localeResolver;
 
     /**
      * @ModelAttribute의 특별한 사용법
@@ -80,20 +80,24 @@ public class FormItemConroller
 
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
-        return "thymeleafwithsring/items/items";
+        return "message/items/items";
     }
 
     @GetMapping("/{itemId}")
     public String item(@PathVariable long itemId, Model model) {
         Item item = itemRepository.findById(itemId);
         model.addAttribute("item", item);
-        return "thymeleafwithsring/items/item";
+        return "message/items/item";
     }
 
     @GetMapping("/add")
-    public String addForm(Model model) {
+    public String addForm(Model model, HttpServletRequest request, HttpServletResponse response) {
+        Locale locale = localeResolver.resolveLocale(request);
+        if ( locale == null ) locale = Locale.getDefault();
+        localeResolver.setLocale(request, response, locale);
+
         model.addAttribute("item", new Item());
-        return "thymeleafwithsring/items/addForm";
+        return "message/items/addForm";
     }
 
     @PostMapping("/add")
@@ -106,7 +110,7 @@ public class FormItemConroller
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/thymeleafwithsring/items/{itemId}";
+        return "redirect:/message/items/{itemId}";
     }
 
     @GetMapping("/{itemId}/edit")
@@ -114,13 +118,13 @@ public class FormItemConroller
         Item item = itemRepository.findById(itemId);
         model.addAttribute("item", item);
 
-        return "thymeleafwithsring/items/editForm";
+        return "message/items/editForm";
     }
 
     @PostMapping("/{itemId}/edit")
     public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
         itemRepository.update(itemId, item);
-        return "redirect:/thymeleafwithsring/items/{itemId}";
+        return "redirect:/message/items/{itemId}";
     }
 
 

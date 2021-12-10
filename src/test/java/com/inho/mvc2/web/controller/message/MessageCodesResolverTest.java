@@ -1,16 +1,10 @@
-package com.inho.mvc2.message;
+package com.inho.mvc2.web.controller.message;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.MessageSource;
-import org.springframework.context.NoSuchMessageException;
 import org.springframework.validation.DefaultMessageCodesResolver;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.MessageCodesResolver;
-
-import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

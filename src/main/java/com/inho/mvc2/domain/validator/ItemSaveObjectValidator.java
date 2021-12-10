@@ -1,9 +1,7 @@
 package com.inho.mvc2.domain.validator;
 
 
-import com.inho.mvc2.domain.Item;
-import com.inho.mvc2.domain.form.ItemSaveForm;
-import com.inho.mvc2.domain.form.ItemUpdateForm;
+import com.inho.mvc2.web.form.ItemSaveForm;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

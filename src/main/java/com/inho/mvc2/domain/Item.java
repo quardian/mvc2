@@ -1,15 +1,9 @@
 package com.inho.mvc2.domain;
 
-import com.inho.mvc2.domain.crud.C;
-import com.inho.mvc2.domain.crud.U;
-import com.inho.mvc2.domain.form.ItemSaveForm;
-import com.inho.mvc2.domain.form.ItemUpdateForm;
+import com.inho.mvc2.web.form.ItemSaveForm;
+import com.inho.mvc2.web.form.ItemUpdateForm;
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -44,26 +38,4 @@ public class Item
         this.quantity = quantity;
     }
 
-    public Item(ItemSaveForm form)
-    {
-        itemName    = form.getItemName();
-        price       = form.getPrice();
-        quantity    = form.getQuantity();
-        open        = form.getOpen();
-        regions     = form.getRegions();
-        itemType    = form.getItemType();
-        deliveryCode= form.getDeliveryCode();
-    }
-
-    public Item(ItemUpdateForm form)
-    {
-        id          = form.getId();
-        itemName    = form.getItemName();
-        price       = form.getPrice();
-        quantity    = form.getQuantity();
-        open        = form.getOpen();
-        regions     = form.getRegions();
-        itemType    = form.getItemType();
-        deliveryCode= form.getDeliveryCode();
-    }
 }
