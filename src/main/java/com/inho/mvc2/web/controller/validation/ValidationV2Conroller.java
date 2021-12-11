@@ -1,9 +1,9 @@
 package com.inho.mvc2.web.controller.validation;
 
-import com.inho.mvc2.repository.ItemRepository;
-import com.inho.mvc2.domain.DeliveryCode;
-import com.inho.mvc2.domain.Item;
-import com.inho.mvc2.domain.ItemType;
+import com.inho.mvc2.domain.repository.item.ItemRepository;
+import com.inho.mvc2.domain.model.DeliveryCode;
+import com.inho.mvc2.domain.model.Item;
+import com.inho.mvc2.domain.model.ItemType;
 import com.inho.mvc2.domain.validator.ItemValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

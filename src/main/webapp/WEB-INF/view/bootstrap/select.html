@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        label {background-color: #bebebf}
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 600px;">
+
+        <div class="py-5 text-center">
+            <h2>Select</h2>
+        </div>
+
+        <h4>type=text</h4>
+        <div class="row m-3">
+            <label for="formConrol1">일반</label>
+            <select id="formConrol1" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+
+        <div class="row m-3">
+            <label for="formConrol2">class="form-select"</label>
+            <select id="formConrol2" class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+        <div class="row m-3">
+            <label for="formConrol3">class="form-select form-select-lg"</label>
+            <select id="formConrol3" class="form-select form-select-lg" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+        <div class="row m-3">
+            <label for="formConrol4">class="form-select form-select-sm"</label>
+            <select id="formConrol4" class="form-select form-select-sm" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+    </div>
+</body>
+</html>

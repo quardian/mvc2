@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        label {background-color: #bebebf}
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 600px;">
+
+        <div class="py-5 text-center">
+            <h2>Checkbox & Radio</h2>
+        </div>
+
+        <h4>type=checkbox</h4>
+        <div class="form-check">
+            <label for="formConrol1" >일반</label>
+            <input type="checkbox" id="formConrol1"  >
+        </div>
+
+        <div class="form-check">
+            <label for="formConrol2" class="form-check-label"> form-check-input</label>
+            <input type="checkbox" id="formConrol2" class="form-check-input"  >
+        </div>
+
+        <div class="form-check">
+            <label for="formConrol3" class="form-check-label">form-check-input</label>
+            <input type="checkbox" id="formConrol3" class="form-check-input"  checked >
+        </div>
+
+
+        <h4>type=radio</h4>
+        <div class="form-check">
+            <label for="formConrol21">일반</label>
+            <input type="radio" id="formConrol21"  >
+        </div>
+
+        <div class="form-check">
+            <label for="formConrol22" class="form-check-label"> form-check-input</label>
+            <input type="radio" id="formConrol22" class="form-check-input"  >
+        </div>
+    </div>
+</body>
+</html>

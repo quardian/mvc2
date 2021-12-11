@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        label {background-color: #bebebf}
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 600px;">
+
+        <div class="py-5 text-center">
+            <h2>Input group</h2>
+        </div>
+
+
+        <div class="input-group mb-3">
+           <span class="input-group-text">@</span>
+            <input type="text" class="form-control" placeholder="사용자 이름" />
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="email계정" />
+            <span class="input-group-text">@inho.com</span>
+        </div>
+
+        <div class="input-group mb-3 flex-nowrap">
+            <span class="input-group-text">$</span>
+            <input type="text" class="form-control"  />
+            <span class="input-group-text">.00</span>
+            <input type="text" class="form-control"  />
+            <span class="input-group-text">.00</span>
+        </div>
+
+        <div class="input-group input-group-sm mb-3">
+            <input type="text" class="form-control" placeholder="input-group-sm" />
+            <span class="input-group-text">@inho.com</span>
+        </div>
+
+        <div class="input-group input-group-lg mb-3">
+            <input type="text" class="form-control" placeholder="input-group-lg" />
+            <span class="input-group-text">@inho.com</span>
+        </div>
+
+
+        <div class="input-group mb-3">
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox"
+                       value="" aria-label="Checkbox for following text input">
+            </div>
+            <input type="text" class="form-control" aria-label="Text input with checkbox">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-text">
+                <input class="form-check-input" type="checkbox"
+                       value="" aria-label="Checkbox for following text input">
+            </div>
+            <input type="text" class="form-control" aria-label="Text input with checkbox">
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-text">주민등록번호</span>
+            <input type="text" aria-label="First name" class="form-control">
+            <span class="input-group-text">-</span>
+            <input type="text" aria-label="Last name" class="form-control">
+        </div>
+
+
+        <div class="input-group mb-3">
+            <button class="btn btn-outline-secondary dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">Dropdown</button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>
+            <input type="text" class="form-control" aria-label="Text input with dropdown button">
+        </div>
+    </div>
+</body>
+</html>

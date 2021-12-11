@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        label {background-color: #bebebf}
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 600px;">
+
+        <div class="py-5 text-center">
+            <h2>Form Control</h2>
+        </div>
+
+        <h4>type=text</h4>
+        <div class="row m-3">
+            <label for="formConrol0">일반 컨트롤</label>
+            <input type="text" id="formConrol0" placeholder="순수" />
+        </div>
+
+        <div class="row m-3">
+            <label for="formConrol1" class="form-label">class="form-control"</label>
+            <input type="text" class="form-control" id="formConrol1"  placeholder="일반" />
+        </div>
+
+        <div class="row m-3">
+            <label for="formConrol3" class="form-label">class="form-control form-control-lg"</label>
+            <input type="text" class="form-control form-control-lg" id="formConrol3" placeholder="크게"  />
+        </div>
+        <div class="row m-3">
+            <label for="formConrol4" class="form-label">class="form-control form-control-sm"</label>
+            <input type="text" class="form-control form-control-sm" id="formConrol4" placeholder="작게" />
+        </div>
+
+        <hr class="m-3">
+        <h4>type=file</h4>
+
+        <div class="row m-3">
+            <label for="formConrol5" class="form-label">file</label>
+            <input type="file"  id="formConrol5" placeholder="순수" />
+        </div>
+
+        <div class="row m-3">
+            <label for="formConrol6" class="form-label"> class="form-control"</label>
+            <input type="file" class="form-control" id="formConrol6" placeholder="" />
+        </div>
+
+        <hr class="m-3">
+        <h4>type=color</h4>
+
+        <div class="row m-3">
+            <label for="formConrol7" class="form-label"></label>
+            <input type="color"  id="formConrol7" placeholder="순수" />
+        </div>
+
+        <div class="row m-3">
+            <label for="formConrol8" class="form-label">class="form-control form-control-color"</label>
+            <input type="color" class="form-control form-control-color" id="formConrol8" placeholder="" />
+        </div>
+
+
+
+        <hr class="m-3">
+        <h4>datalist</h4>
+
+        <div class="row m-3">
+            <label for="formConrol9" class="form-label">브라우저 리스트</label>
+            <input type="text" list="browsers"  id="formConrol9" />
+        </div>
+
+        <div class="row m-3">
+            <label for="formConrol10" class="form-label">브라우저 리스트 class="form-control"</label>
+            <input type="text" list="browsers"  class="form-control" id="formConrol10" />
+        </div>
+        <datalist id="browsers">
+            <option value="Edge">
+            <option value="Firefox">
+            <option value="Chrome">
+            <option value="Opera">
+            <option value="Safari">
+        </datalist>
+    </div>
+</body>
+</html>

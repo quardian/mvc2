@@ -1,7 +1,7 @@
 package com.inho.mvc2.web.controller.validation;
 
 
-import com.inho.mvc2.domain.Item;
+import com.inho.mvc2.domain.model.Item;
 import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintViolation;

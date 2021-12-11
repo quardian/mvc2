@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container" style="max-width: 600px;">
+
+        <div class="py-5 text-center">
+            <h2>홈 화면</h2>
+        </div>
+
+        <h4 class="mb-3" th:text="|로그인 : ${member.name}|">로그인 사용자 명</h4>
+
+        <div class="row">
+            <div class="col">
+                <button type="button" class="w-100 btn btn-primary btn-lg"
+                        th:onclick="|location.href='@{/items}'|">상품관리</button>
+            </div>
+            <div class="col">
+                <button type="button" class="w-100 btn btn-dark btn-lg"
+                        th:onclick="|location.href='@{/logout}'|">로그아웃</button>
+            </div>
+        </div>
+
+        <hr class="my-4" />
+    </div>
+</body>
+</html>

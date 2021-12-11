@@ -1,6 +1,6 @@
 package com.inho.mvc2.web.controller.basic;
 
-import com.inho.mvc2.domain.User;
+import com.inho.mvc2.domain.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

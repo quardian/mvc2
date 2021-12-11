@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        label {background-color: #bebebf}
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 600px;">
+
+        <div class="py-5 text-center">
+            <h2>Range</h2>
+        </div>
+
+        <h4>type=checkbox</h4>
+        <div >
+            <label for="formConrol1" >일반</label>
+            <input type="range" id="formConrol1" min="0" max="100" step="10" >
+        </div>
+
+        <div class="form-check">
+            <label for="formConrol2" class="form-label"> class="form-range"</label>
+            <input type="range" id="formConrol2"
+                   min="0" max="100" step="10"
+                   class="form-range"  >
+        </div>
+
+    </div>
+</body>
+</html>

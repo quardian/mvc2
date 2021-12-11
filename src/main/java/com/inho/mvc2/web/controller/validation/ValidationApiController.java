@@ -1,6 +1,6 @@
 package com.inho.mvc2.web.controller.validation;
 
-import com.inho.mvc2.web.form.ItemSaveForm;
+import com.inho.mvc2.web.model.form.item.ItemSaveForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;

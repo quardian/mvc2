@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container" style="max-width: 600px;">
+
+        <div class="py-5 text-center">
+            <h2>Floating labels</h2>
+        </div>
+
+        <div class="form-floating mb-3">
+            <!-- input ~ label : 순서 중요, placeholder가 필요 -->
+            <input type="email"
+                   class="form-control"
+                   id="floatingInput"
+                   placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="email"
+                   class="form-control"
+                   id="floatingInputValue"
+                   placeholder="name@example.com"
+                   value="test@example.com">
+            <label for="floatingInputValue">Input with value</label>
+        </div>
+    </div>
+</body>
+</html>
