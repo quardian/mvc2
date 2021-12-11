@@ -1,4 +1,4 @@
-package com.inho.mvc2.web.common.config;
+package com.inho.mvc2.web.common.configuration;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;

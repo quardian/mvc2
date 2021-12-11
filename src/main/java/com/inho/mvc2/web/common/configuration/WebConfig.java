@@ -1,21 +1,30 @@
-package com.inho.mvc2.web.common.config;
+package com.inho.mvc2.web.common.configuration;
 
 import com.inho.mvc2.web.common.argumentresolver.LoginMemberArgumentResolver;
+import com.inho.mvc2.web.common.exceptionresolver.MyHandlerExceptionResolver;
+import com.inho.mvc2.web.common.exceptionresolver.UserHandlerExceptionResolver;
 import com.inho.mvc2.web.common.filter.LogFilter;
 import com.inho.mvc2.web.common.filter.LoginCheckFilter;
 import com.inho.mvc2.web.common.interceptor.LogInterceptor;
 import com.inho.mvc2.web.common.interceptor.LoginCheckInterceptor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    private final MyHandlerExceptionResolver  myHandlerExceptionResolver;
+    private final UserHandlerExceptionResolver userHandlerExceptionResolver;
 
     /**-----------------------------------------------------------------------------------------
      *
@@ -39,6 +48,8 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
+
         registry.addInterceptor( new LogInterceptor() )
                 .order(1)
                 .addPathPatterns("/**") // 서블릿하고 패턴이 다름
@@ -63,7 +74,29 @@ public class WebConfig implements WebMvcConfigurer {
         WebMvcConfigurer.super.addArgumentResolvers(resolvers);
     }
 
-    /**-----------------------------------------------------------------------------------------
+    /**
+     * HandlerExeptionResolver 등록
+     * @param resolvers
+     */
+    @Override
+    public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
+
+        resolvers.add ( myHandlerExceptionResolver );
+        resolvers.add ( userHandlerExceptionResolver );
+
+        WebMvcConfigurer.super.extendHandlerExceptionResolvers(resolvers);
+    }
+
+/*
+    HandlerExceptionResolver를 등록하기 위해 이 메소드 사용시
+    스프링이 기본으로 등록하는 ExceptionResolver가 제거되므로 주의,
+    extendHandlerExceptionResolvers를 사용하자.
+
+    @Override
+    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
+        WebMvcConfigurer.super.configureHandlerExceptionResolvers(resolvers);
+    }*/
+/**-----------------------------------------------------------------------------------------
      *
      * 필터 등록 ( Bean으로 등록하면 WAS가 Singleton으로 관리한다. )
      * 
@@ -77,10 +110,21 @@ public class WebConfig implements WebMvcConfigurer {
     {
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
 
+                /*
+
+        DispatcherType 종류는 아래와 같다.
+        - REQUEST   : 클라이언트 요청
+        - ERROR     : 오류 요청
+        - FOWARD    : RequestDispatcher.forward(request, response)
+        - INCLUDE   : 서블릿에서 다른 서블릿이나 JSP의 결과를 포함할 때 RequestDispatcher.include(request, response)
+        - ASYNC     : 서블릿 비동기 호출
+
+        * */
+
         filterRegistrationBean.setFilter( new LogFilter() );
         filterRegistrationBean.setOrder(1);                 // 순서가 낮을 수록 먼저 동작.
         filterRegistrationBean.addUrlPatterns("/*");        // 필터가 처리할 URL 패턴
-
+        filterRegistrationBean.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.ERROR); // 기본값은 REQUEST 만 설정된다.
         return filterRegistrationBean;
     }
 
@@ -97,7 +141,7 @@ public class WebConfig implements WebMvcConfigurer {
         filterRegistrationBean.setFilter( new LoginCheckFilter() );
         filterRegistrationBean.setOrder(2);                 // 순서가 낮을 수록 먼저 동작.
         filterRegistrationBean.addUrlPatterns("/*");        // 필터가 처리할 URL 패턴
-
+        filterRegistrationBean.setDispatcherTypes(DispatcherType.REQUEST);
         return filterRegistrationBean;
     }
 }

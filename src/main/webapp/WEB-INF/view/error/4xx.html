@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>provided by Springboot</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container" style="max-width: 600px;">
+
+        <div class="py-5 text-center">
+            <h2>4xx 에러 발생</h2>
+        </div>
+
+        <div class="bg-info">
+            <p>오류 정보는 보안상 문제로 기본적으로 노출 안함</p>
+            <p>
+                application.properties(기본 설정값) <br />
+                server.error.include-exception=false <br />
+                server.error.include-messsage=never <br />
+                server.error.include-stacktrace=never <br />
+                server.error.include-binding-errors=never <br />
+            </p>
+
+        </div>
+        <ul> 오류정보
+            <li th:text="|timestamp: ${timestamp}|"></li>
+            <li th:text="|path: ${path}|"></li>
+            <li th:text="|status: ${status}|"></li>
+            <li th:text="|message: ${message}|"></li>
+            <li th:text="|error: ${error}|"></li>
+            <li th:text="|exception: ${exception}|"></li>
+            <li th:text="|errors: ${errors}|"></li>
+            <li th:text="|trace: ${trace}|"></li>
+        </ul>
+
+        <hr class="my-4" />
+    </div>
+</body>
+</html>

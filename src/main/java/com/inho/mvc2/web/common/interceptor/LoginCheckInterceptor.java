@@ -7,6 +7,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -32,7 +33,17 @@ public class LoginCheckInterceptor implements HandlerInterceptor
         String requestURI = request.getRequestURI();
         String uuid = UUID.randomUUID().toString();
 
-        if ( handler instanceof HandlerMethod ){
+        /**
+         *         DispatcherType 종류는 아래와 같다.
+         *         - REQUEST   : 클라이언트 요청
+         *         - ERROR     : 오류 요청 (WAS가 호출)
+         *         - FOWARD    : RequestDispatcher.forward(request, response)
+         *         - INCLUDE   : 서블릿에서 다른 서블릿이나 JSP의 결과를 포함할 때 RequestDispatcher.include(request, response)
+         *         - ASYNC     : 서블릿 비동기 호출
+         */
+        DispatcherType dispatcherType = request.getDispatcherType();
+
+        if ( dispatcherType == DispatcherType.REQUEST && handler instanceof HandlerMethod ){
             HandlerMethod handlerMethod = (HandlerMethod) handler;
 
             Class<?> controller = handlerMethod.getBeanType();
