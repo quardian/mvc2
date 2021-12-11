@@ -2,10 +2,9 @@ package com.inho.mvc2.web.controller.typeconvertor;
 
 import com.inho.mvc2.web.model.IpPort;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,12 +17,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/typeconvertor")
 public class HelloController
 {
 
     @GetMapping("hello-v1")
+    @ResponseBody
     public String helloV1(HttpServletRequest request)
     {
         String data = request.getParameter("data"); // 문자 타입 조회
@@ -36,11 +36,17 @@ public class HelloController
 
 
     @GetMapping()
-    public String helloV2(@RequestParam("ox") boolean ox,
+    public String converterView(
+                            Model model,
+                            @RequestParam("ox") boolean ox,
                           @RequestParam("ip") IpPort ipPort)
     {
         log.info("ox = {}, ipPort=", ox, ipPort);
-        return "OK";
+
+        model.addAttribute("ox", ox);
+        model.addAttribute("ipPort", ipPort);
+
+        return "typeconvertor/converterView";
     }
 
 

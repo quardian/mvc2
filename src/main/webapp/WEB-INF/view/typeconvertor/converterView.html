@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+            href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>템플릿 컨버터 테스트</h2>
+    </div>
+
+
+
+    <hr class="my-4">
+    ${{object}} 컨버터 적용(ConversionService가 적용되어 출력된다)
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>OX</th>
+                <th>IP</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${ox}">10000</td>
+                <td th:text="${ipPort}">10</td>
+            </tr>
+            <tr>
+                <td th:text="${{ox}}">10000</td>
+                <td th:text="${{ipPort}}">10</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div> <!-- /container -->
+
+</body>
+</html>
