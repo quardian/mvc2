@@ -1,16 +1,18 @@
 package com.inho.mvc2.web.common.config;
 
+import com.inho.mvc2.web.common.argumentresolver.LoginMemberArgumentResolver;
 import com.inho.mvc2.web.common.filter.LogFilter;
 import com.inho.mvc2.web.common.filter.LoginCheckFilter;
 import com.inho.mvc2.web.common.interceptor.LogInterceptor;
 import com.inho.mvc2.web.common.interceptor.LoginCheckInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.Filter;
+import java.util.List;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -31,7 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
         **  경로 끝까지 0개 이상의 경로(/) 일치
         {spring}        경로(/)와 일치하고 spring이라는 변수로 캡처
         {spring:[a-z]+} spring 이름의 경로패스로 a-z 문자가 1 개 이상 일치
-        {*spring}       경로가 끝날 때 까지 0개 이상의 경로(/)와 일치하고 spring이라는 변수로 캐처  
+        {*spring}       경로가 끝날 때 까지 0개 이상의 경로(/)와 일치하고 spring이라는 변수로 캐처
     {spring:[}
 
      */
@@ -48,7 +50,18 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/css/**", "*.ico", "/error");
     }
 
+    /**
+     * ArgementResolver 추가
+     * @param resolvers
+     */
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 
+        // 로그인 ArgumentResolver
+        resolvers.add( new LoginMemberArgumentResolver());
+
+        WebMvcConfigurer.super.addArgumentResolvers(resolvers);
+    }
 
     /**-----------------------------------------------------------------------------------------
      *

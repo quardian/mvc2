@@ -2,6 +2,7 @@ package com.inho.mvc2.web.controller;
 
 import com.inho.mvc2.domain.model.member.Member;
 import com.inho.mvc2.domain.repository.member.MemberRepository;
+import com.inho.mvc2.web.common.annotation.Login;
 import com.inho.mvc2.web.model.SessionConst;
 import com.inho.mvc2.web.utils.SessionManager;
 import lombok.RequiredArgsConstructor;
@@ -40,9 +41,21 @@ public class HomeController {
         return "loginHome";
     }
 
-    @GetMapping
+    //@GetMapping
     public String homeV2( @SessionAttribute(name=SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                         Model model)
+    {
+        if ( loginMember == null ){
+            return "home";
+        }
+
+        model.addAttribute("member", loginMember);
+        return "loginHome";
+    }
+
+    @GetMapping
+    public String homeV3ArgumentResolver( @Login Member loginMember,
+                          Model model)
     {
         if ( loginMember == null ){
             return "home";
