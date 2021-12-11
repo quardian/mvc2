@@ -7,9 +7,14 @@ import com.inho.mvc2.web.common.filter.LogFilter;
 import com.inho.mvc2.web.common.filter.LoginCheckFilter;
 import com.inho.mvc2.web.common.interceptor.LogInterceptor;
 import com.inho.mvc2.web.common.interceptor.LoginCheckInterceptor;
+import com.inho.mvc2.web.common.typeconverter.BooleanToOxConverter;
+import com.inho.mvc2.web.common.typeconverter.IpPortToStringConverter;
+import com.inho.mvc2.web.common.typeconverter.OxToBooleanConverter;
+import com.inho.mvc2.web.common.typeconverter.StringToIpPortConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -85,6 +90,22 @@ public class WebConfig implements WebMvcConfigurer {
         resolvers.add ( userHandlerExceptionResolver );
 
         WebMvcConfigurer.super.extendHandlerExceptionResolvers(resolvers);
+    }
+
+    /**
+     * Convertor를 등록한다.
+     * @param registry
+     */
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+
+        // 컨버터 등록 : 스프링 기본 등록된 것 중복되면, 우리가 등록한 걸 우선한다.
+        registry.addConverter( new BooleanToOxConverter() );
+        registry.addConverter( new OxToBooleanConverter() );
+        registry.addConverter( new StringToIpPortConverter() );
+        registry.addConverter( new IpPortToStringConverter() );
+
+        WebMvcConfigurer.super.addFormatters(registry);
     }
 
 /*
