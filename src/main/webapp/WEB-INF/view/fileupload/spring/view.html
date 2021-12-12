@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2>상품 조회</h2>
+    </div>
+
+    <div>
+        <table class="table table-bordered" th:object="${item}">
+            <tr>
+                <th>상품명</th>
+                <td th:text="*{itemName}"></td>
+            </tr>
+            <tr>
+                <th>첨부파일</th>
+                <td>
+                    <a th:if="${item.attachFile}"
+                       th:href="|/attach/${item.id}"
+                       th:text="${item.getAttachFile().getUploadFileName()}"
+                </td>
+            </tr>
+
+            <tr>
+                <th>첨부파일</th>
+                <td>
+                   <img th:each="imageFile : ${item.imageFiles}"
+                        th:src="|/images/${imageFile.getStoreFileName()}|"
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+
+</div> <!-- /container -->
+</body>
+</html>
