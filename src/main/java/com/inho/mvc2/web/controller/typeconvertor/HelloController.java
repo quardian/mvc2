@@ -35,19 +35,6 @@ public class HelloController
     }
 
 
-    @GetMapping()
-    public String converterView(
-                            Model model,
-                            @RequestParam("ox") boolean ox,
-                          @RequestParam("ip") IpPort ipPort)
-    {
-        log.info("ox = {}, ipPort=", ox, ipPort);
-
-        model.addAttribute("ox", ox);
-        model.addAttribute("ipPort", ipPort);
-
-        return "typeconvertor/converterView";
-    }
 
 
 }
