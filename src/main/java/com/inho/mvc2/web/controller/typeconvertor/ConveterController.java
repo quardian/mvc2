@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 /**
  * 스프링은 용도에 따라 다양한 방식의 타입 컨버터 제공
@@ -37,7 +38,7 @@ public class ConveterController
 
         model.addAttribute("ox", ox);
         model.addAttribute("ipPort", ipPort);
-
+        model.addAttribute("num", 10000.1);
         return "typeconvertor/converterView";
     }
 
@@ -49,6 +50,7 @@ public class ConveterController
         IpPort ipPort = new IpPort("8.8.8.8", 51);
         form.setIpPort(ipPort);
         form.setOx(false);
+        form.setPrice(BigDecimal.valueOf(10000.123));
         return "typeconvertor/converterEdit";
     }
 
@@ -74,7 +76,7 @@ public class ConveterController
     {
         private boolean ox;
         private IpPort  ipPort;
-
+        private BigDecimal price;
         public Form(boolean ox, IpPort ipPort) {
             this.ox = ox;
             this.ipPort = ipPort;

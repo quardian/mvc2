@@ -5,6 +5,7 @@ import com.inho.mvc2.web.common.exceptionresolver.MyHandlerExceptionResolver;
 import com.inho.mvc2.web.common.exceptionresolver.UserHandlerExceptionResolver;
 import com.inho.mvc2.web.common.filter.LogFilter;
 import com.inho.mvc2.web.common.filter.LoginCheckFilter;
+import com.inho.mvc2.web.common.formatter.NumberFormatter;
 import com.inho.mvc2.web.common.interceptor.LogInterceptor;
 import com.inho.mvc2.web.common.interceptor.LoginCheckInterceptor;
 import com.inho.mvc2.web.common.typeconverter.BooleanToOxConverter;
@@ -93,7 +94,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     /**
-     * Convertor를 등록한다.
+     * Convertor 및 Fomatter를 등록한다.
      * @param registry
      */
     @Override
@@ -104,6 +105,9 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addConverter( new OxToBooleanConverter() );
         registry.addConverter( new StringToIpPortConverter() );
         registry.addConverter( new IpPortToStringConverter() );
+
+        // 포맷터 등록
+        registry.addFormatter( new NumberFormatter() );
 
         WebMvcConfigurer.super.addFormatters(registry);
     }
